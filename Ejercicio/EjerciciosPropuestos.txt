@@ -1,0 +1,149 @@
+Problema 1 : 
+-----------
+Una concesionaria de autos vende autos usados y almacena la información en una tabla 
+llamada "autos".
+
+1- Elimine la tabla "autos" si existe.
+
+2- Cree la tabla con la siguiente estructura:
+ create table autos(
+  patente char(6),
+  marca varchar(20),
+  modelo char(4),
+  precio decimal(8,2) unsigned,
+  primary key(patente)
+ );
+
+3- Ingrese los siguientes registros:
+ insert into autos
+  values('ACD123','Fiat 128','1970',15000);
+ insert into autos
+  values('ACG234','Renault 11','1990',40000);
+ insert into autos
+  values('BCD333','Peugeot 505','1990',80000);
+ insert into autos
+  values('GCD123','Renault Clio','1990',70000);
+ insert into autos
+  values('BCC333','Renault Megane','1998',95000);
+ insert into autos
+  values('BVF543','Fiat 128','1975',20000);
+
+4- Muestre el valor del auto más caro y más barato:
+ select max(precio), min(precio)
+  from autos;
+
+5- Muestre el valor de auto más caro de 1990:
+ select max(precio)
+  from autos
+  where modelo='1990';
+
+6- Muestre el promedio de los precios de los autos "Fiat 128":
+ select avg(precio)
+  from autos
+  where marca='Fiat 128';
+
+7- Calcule el valor en dinero de todos los autos marca "Renault" con modelos menores a "1995":
+ select sum(precio)
+  from autos
+  where marca like '%Renault%' and
+  modelo<1995;
+
+
+
+
+
+Problema 2 : 
+------------
+Un comercio guarda la información de sus ventas en una tabla llamada "facturas" en la que 
+registra el número de factura, la descripción de los items comprados, el precio por unidad de los 
+items y la cantidad.
+
+1- Elimine la tabla si existe.
+
+2- Cree la tabla:
+ create table facturas(
+  numero int(10) zerofill,
+  descripcion varchar(30),
+  precioporunidad decimal(5,2) unsigned,
+  cantidad tinyint unsigned
+ );
+
+3- Ingrese algunos registros:
+ insert into facturas values(504,'escuadra 20 cm.',2.5,100);
+ insert into facturas values(504,'escuadra 50 cm.',5,80);
+ insert into facturas values(2002,'compas plastico',8,120);
+ insert into facturas values(2002,'compas metal',15.4,100);
+ insert into facturas values(2002,'escuadra 20 cm.',2.5,100);
+ insert into facturas values(4567,'escuadra 50 cm.',5,200);
+
+4- Cuente la cantidad de items de la factura número "2002":
+ select count(*)
+  from facturas
+  where numero='2002';
+
+5- Sume la cantidad de productos de la factura número "2002":
+ select sum(cantidad)
+  from facturas
+  where numero='2002';
+
+6- Muestre el total en dinero de la factura "504":
+ select sum(cantidad*precioporunidad)
+  from facturas
+  where numero='504';
+
+
+
+Problema 3 : 
+------------
+Una academia de informática dicta distintos cursos y almacena en una tabla 
+llamada "inscripciones" la siguiente información: nombre del curso, documento del alumno, fecha en 
+que se inscribe el alumno, monto del pago (algunos dejan una seña, otros pagan el curso completo).
+
+1- Elimine la tabla si existe.
+
+2- cree la tabla:
+ create table inscripciones(
+  nombre varchar(30),
+  documento char(8),
+  fechainscripto date,
+  pago decimal(5,2) unsigned not null
+ );
+
+3- Ingrese algunos registros:
+ insert into inscripciones values('PHP básico', '22333444','2006-08-10',50);
+ insert into inscripciones values('PHP básico', '23333444','2006-08-10',50);
+ insert into inscripciones values('PHP básico', '24333444','2006-08-11',30);
+ insert into inscripciones values('PHP experto', '25333444','2006-08-11',0);
+ insert into inscripciones values('PHP experto', '26333444','2006-08-12',200);
+ insert into inscripciones values('JavaScript básico', '22333444','2006-08-10',100);
+ insert into inscripciones values('Operador de PC', '27333444','2006-08-12',10);
+ insert into inscripciones values('Operador de PC', '28333444','2006-08-13',50);
+ insert into inscripciones values('Operador de PC', '29333444','2006-08-14',40);
+ insert into inscripciones values('Operador de PC', '30333444','2006-08-14',0);
+ insert into inscripciones values('Diseño web', '29333444','2006-08-14',200);
+ insert into inscripciones values('Diseño web', '30333444','2006-08-14',0);
+
+4- calcule la cantidad de inscriptos para el curso de "Operador de PC":
+  select count(*)
+  from inscripciones
+  where nombre='Operador de PC';
+
+5- Calcule la suma recaudada por los pagos de los cursos el día "2006-08-10":
+  select sum(pago)
+  from inscripciones
+  where fechainscripto='2006-08-10';
+
+6- Calcule el promedio de los pagos de los inscriptos:
+  select avg(pago)
+  from inscripciones;
+
+7- Muestre el máximo y el mínimo valor de pago, sin considerar quienes no pagan:
+  select max(pago),min(pago)
+  from inscripciones
+  where pago>0;
+
+8- Vea en cuántos cursos se inscribió el alumno con documento "22333444" y cuánto abonó en total:
+  select count(*) as 'cantidad',
+  sum(pago) as 'Abono'
+  from inscripciones
+  where documento='22333444';
